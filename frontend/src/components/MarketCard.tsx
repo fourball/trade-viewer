@@ -10,6 +10,14 @@ export const MarketCard: React.FC<MarketCardProps> = ({ data }) => {
   const isPositive = data.change >= 0;
   const changeClass = isPositive ? styles.positive : styles.negative;
   const arrow = isPositive ? '▲' : '▼';
+  
+  // 30分以内かどうかを判定（先に定義）
+  const isRecentUpdate = (() => {
+    const now = new Date();
+    const updateTime = new Date(data.timestamp);
+    const diffMinutes = (now.getTime() - updateTime.getTime()) / (1000 * 60);
+    return diffMinutes <= 30;
+  })();
 
   const formatNumber = (num: number, decimals: number = 2): string => {
     return new Intl.NumberFormat('ja-JP', {
@@ -51,25 +59,35 @@ export const MarketCard: React.FC<MarketCardProps> = ({ data }) => {
     }).format(date);
   };
 
+  // 30分以内かどうかを判定
+  const isRecent = (timestamp: string): boolean => {
+    const now = new Date();
+    const updateTime = new Date(timestamp);
+    const diffMinutes = (now.getTime() - updateTime.getTime()) / (1000 * 60);
+    return diffMinutes <= 30;
+  };
+
+  // カテゴリに応じたクラス名を決定
+  const categoryClass = data.category ? styles[`category${data.category.charAt(0).toUpperCase() + data.category.slice(1)}`] : '';
+
   return (
-    <div className={styles.card}>
+    <div className={`${styles.card} ${categoryClass}`}>
       <div className={styles.header}>
         <div>
-          <h3 className={styles.symbol}>{data.symbol}</h3>
+          <h3 className={`${styles.symbol} ${!isRecentUpdate ? styles.oldData : ''}`}>{data.symbol}</h3>
           <p className={styles.name}>{data.name}</p>
         </div>
-        <span className={styles.updateTime}>{formatTime(data.timestamp)}</span>
+        <span className={`${styles.updateTime} ${isRecent(data.timestamp) ? styles.recentUpdate : ''}`}>{formatTime(data.timestamp)}</span>
       </div>
       
       <div className={styles.priceSection}>
-        <div className={styles.currentPrice}>
+        <div className={`${styles.currentPrice} ${!isRecentUpdate ? styles.oldData : ''}`}>
           {formatCurrency(data.price, data.currency, data.symbol)}
         </div>
         <div className={`${styles.change} ${changeClass}`}>
           <span className={styles.arrow}>{arrow}</span>
           <span className={styles.changeValue}>
-            {formatNumber(Math.abs(data.change))}
-            ({data.changePercent > 0 ? '+' : ''}{formatNumber(data.changePercent)}%)
+            {data.changePercent > 0 ? '+' : ''}{formatNumber(data.changePercent)}%
           </span>
         </div>
       </div>
@@ -78,11 +96,11 @@ export const MarketCard: React.FC<MarketCardProps> = ({ data }) => {
         <div className={styles.range}>
           <div className={styles.rangeItem}>
             <span className={styles.label}>高値</span>
-            <span className={styles.value}>{data.high ? formatPrice(data.high, data.currency, data.symbol) : '-'}</span>
+            <span className={`${styles.value} ${!isRecentUpdate ? styles.oldData : ''}`}>{data.high ? formatPrice(data.high, data.currency, data.symbol) : '-'}</span>
           </div>
           <div className={styles.rangeItem}>
             <span className={styles.label}>安値</span>
-            <span className={styles.value}>{data.low ? formatPrice(data.low, data.currency, data.symbol) : '-'}</span>
+            <span className={`${styles.value} ${!isRecentUpdate ? styles.oldData : ''}`}>{data.low ? formatPrice(data.low, data.currency, data.symbol) : '-'}</span>
           </div>
         </div>
       )}

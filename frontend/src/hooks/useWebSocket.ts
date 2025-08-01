@@ -58,12 +58,12 @@ export const useWebSocket = ({ symbols, onUpdate, onError }: UseWebSocketOptions
               onError?.(message.message || 'Unknown error');
               break;
           }
-        } catch (error) {
+        } catch {
           // Silently ignore parse errors
         }
       };
 
-      ws.onerror = (error) => {
+      ws.onerror = () => {
         onError?.('WebSocket connection error');
       };
 
@@ -81,7 +81,7 @@ export const useWebSocket = ({ symbols, onUpdate, onError }: UseWebSocketOptions
           }, delay);
         }
       };
-    } catch (error) {
+    } catch {
       onError?.('Failed to connect to WebSocket');
     }
   }, [symbols, onUpdate, onError]);

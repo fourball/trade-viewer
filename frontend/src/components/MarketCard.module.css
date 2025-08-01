@@ -40,6 +40,10 @@
   color: #666;
 }
 
+.recentUpdate {
+  color: #ffffff;
+}
+
 .priceSection {
   margin-bottom: 4px;
 }
@@ -101,4 +105,29 @@
   font-size: 12px;
   color: #bbb;
   font-weight: 500;
+}
+
+.oldData {
+  color: #666 !important;
+}
+
+/* カテゴリごとの上辺の色 */
+.categoryStock {
+  border-top: 3px solid #3b82f6; /* 青色: 株価 */
+}
+
+.categoryCrypto {
+  border-top: 3px solid #f59e0b; /* オレンジ色: 仮想通貨 */
+}
+
+.categoryCommodity {
+  border-top: 3px solid #10b981; /* 緑色: コモディティ */
+}
+
+.categoryForex {
+  border-top: 3px solid #8b5cf6; /* 紫色: 為替 */
+}
+
+.categoryFutures {
+  border-top: 3px solid #06b6d4; /* シアン色: 先物 */
 }

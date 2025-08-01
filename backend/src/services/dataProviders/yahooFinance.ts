@@ -14,13 +14,14 @@ import { logger } from '../../utils/logger';
 
 export class YahooFinanceProvider extends DataProvider {
   name = 'Yahoo Finance';
-  supportedSymbols = ['NKY', 'NDX', 'DJI', 'HSI', 'NQ', 'YM', 'USDJPY'];
+  supportedSymbols = ['NKY', 'HSI', 'NK225', 'NDX', 'DJI', 'NQ', 'YM', 'USDJPY'];
 
   private symbolMappings: Record<string, string> = {
     NKY: '^N225',
+    HSI: '^HSI',
+    NK225: 'NIY=F',  // 日経225先物
     NDX: '^IXIC',
     DJI: '^DJI',
-    HSI: '^HSI',
     NQ: 'NQ=F',
     YM: 'YM=F',
     USDJPY: 'JPY=X',
@@ -52,12 +53,18 @@ export class YahooFinanceProvider extends DataProvider {
         regularMarketDayHigh: number;
         regularMarketDayLow: number;
         regularMarketVolume?: number;
+        regularMarketTime?: number; // Unix timestamp
         currency?: string;
       }
       
       const data = response.data as { chart: { result: Array<{ meta: YahooMeta }> } };
       const result = data.chart.result[0];
       const quote = result.meta;
+
+      // regularMarketTimeがあればそれを使用、なければ現在時刻
+      const timestamp = quote.regularMarketTime 
+        ? new Date(quote.regularMarketTime * 1000).toISOString()
+        : new Date().toISOString();
 
       return this.createMarketData({
         symbol,
@@ -68,6 +75,7 @@ export class YahooFinanceProvider extends DataProvider {
         low: quote.regularMarketDayLow,
         volume: quote.regularMarketVolume,
         currency: quote.currency || 'USD',
+        timestamp,
       });
     } catch (error) {
       logger.error(`Yahoo Finance fetch error for ${symbol}:`, error);

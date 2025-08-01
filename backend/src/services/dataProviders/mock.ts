@@ -9,12 +9,13 @@ export class MockProvider extends DataProvider {
 
   private mockData: Record<string, { base: number; volatility: number; currency: string }> = {
     NKY: { base: 41000, volatility: 500, currency: 'JPY' },
+    HSI: { base: 16500, volatility: 200, currency: 'HKD' },
+    NK225: { base: 41100, volatility: 500, currency: 'JPY' },
     NDX: { base: 18000, volatility: 200, currency: 'USD' },
     DJI: { base: 39000, volatility: 300, currency: 'USD' },
     BTCUSDT: { base: 115000, volatility: 3000, currency: 'USD' },
     GOLD: { base: 2050, volatility: 20, currency: 'USD' },
     USDJPY: { base: 150.5, volatility: 0.5, currency: 'JPY' },
-    HSI: { base: 16500, volatility: 200, currency: 'HKD' },
     NQ: { base: 18100, volatility: 200, currency: 'USD' },
     YM: { base: 39100, volatility: 300, currency: 'USD' },
   };

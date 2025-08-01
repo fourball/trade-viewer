@@ -1,4 +1,4 @@
-import { MarketData } from '../../types/market';
+import { MarketData, SYMBOL_CATEGORIES, MarketSymbol } from '../../types/market';
 
 export abstract class DataProvider {
   abstract name: string;
@@ -19,8 +19,9 @@ export abstract class DataProvider {
     low?: number;
     volume?: number;
     currency: string;
+    timestamp?: string;
   }): MarketData {
-    const { symbol, name, price, previousClose, high, low, volume, currency } = params;
+    const { symbol, name, price, previousClose, high, low, volume, currency, timestamp } = params;
     const change = price - previousClose;
     const changePercent = previousClose !== 0 ? (change / previousClose) * 100 : 0;
 
@@ -34,8 +35,9 @@ export abstract class DataProvider {
       high: high || price,
       low: low || price,
       volume,
-      timestamp: new Date().toISOString(),
+      timestamp: timestamp || new Date().toISOString(),
       currency,
+      category: SYMBOL_CATEGORIES[symbol as MarketSymbol],
     };
   }
 }

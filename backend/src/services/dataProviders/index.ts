@@ -1,7 +1,6 @@
 import { DataProvider } from './base';
 import { YahooFinanceProvider } from './yahooFinance';
 import { CoinGeckoProvider } from './coinGecko';
-import { ExchangeRateProvider } from './exchangeRate';
 import { AlphaVantageProvider } from './alphaVantage';
 import { MockProvider } from './mock';
 

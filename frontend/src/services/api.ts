@@ -25,7 +25,7 @@ export const marketAPI = {
     try {
       const response = await apiClient.get<ApiResponse<MarketData[]>>('/api/v1/market/all');
       return response.data.data || [];
-    } catch (error) {
+    } catch {
       return [];
     }
   },
@@ -35,7 +35,7 @@ export const marketAPI = {
     try {
       const response = await apiClient.get<ApiResponse<MarketData>>(`/api/v1/market/${symbol}`);
       return response.data.data || null;
-    } catch (error) {
+    } catch {
       return null;
     }
   },
@@ -45,7 +45,7 @@ export const marketAPI = {
     try {
       await apiClient.get('/api/health');
       return true;
-    } catch (error) {
+    } catch {
       return false;
     }
   },

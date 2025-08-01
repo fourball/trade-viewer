@@ -1,3 +1,5 @@
+export type MarketCategory = 'stock' | 'crypto' | 'commodity' | 'forex' | 'futures';
+
 export interface MarketData {
   symbol: string;
   name: string;
@@ -10,6 +12,7 @@ export interface MarketData {
   volume?: number;
   currency: string;
   timestamp: string;
+  category?: MarketCategory;
 }
 
 export interface WebSocketMessage {
@@ -32,24 +35,23 @@ export interface ApiResponse<T> {
 export const MARKET_SYMBOLS = {
   // Indices
   NKY: '日経平均',
-  NDX: 'NASDAQ総合',
+  HSI: '香港ハンセン',
+  NDX: 'ナスダック',
   DJI: 'ダウ平均',
-  HSI: 'ハンセン指数',
   
   // Futures
-  NQ: 'NASDAQ先物',
+  NK225: '日経平均先物',
+  NQ: 'ナスダック先物',
   YM: 'ダウ先物',
   
   // Crypto
-  BTC: 'ビットコイン',
-  ETH: 'イーサリアム',
+  BTCUSDT: 'ビットコイン',
   
   // FX
-  USDJPY: 'USD/JPY',
+  USDJPY: 'ドル円',
   
   // Commodities
-  GOLD: '金',
-  OIL: '原油',
+  GOLD: 'ゴールド',
 } as const;
 
 export type MarketSymbol = keyof typeof MARKET_SYMBOLS;

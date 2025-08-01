@@ -54,7 +54,7 @@ export const MarketDashboard: React.FC = () => {
           dataMap.set(item.symbol, item);
         });
         setMarketData(dataMap);
-      } catch (err) {
+      } catch {
         setError('初期データの取得に失敗しました');
       } finally {
         setIsLoading(false);
@@ -64,8 +64,10 @@ export const MarketDashboard: React.FC = () => {
     fetchInitialData();
   }, []);
 
-  // すべてのデータを一つの配列に
-  const allData = Array.from(marketData.values());
+  // すべてのデータを定義順に並べる
+  const allData = symbols
+    .map(symbol => marketData.get(symbol))
+    .filter((data): data is MarketData => data !== undefined);
 
   if (isLoading) {
     return (
