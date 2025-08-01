@@ -109,7 +109,7 @@ const ws = new WebSocket('ws://localhost:3001/ws');
 ```json
 {
   "type": "subscribe",
-  "symbols": ["NKY", "BTCUSDT", "USDJPY"]
+  "symbols": ["NKY", "BTCUSDT", "GOLD", "USDJPY"]
 }
 ```
 

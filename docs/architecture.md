@@ -14,16 +14,16 @@
 - **TypeScript** - 型安全性
 
 ### フロントエンド
-- **Vite** - ビルドツール
-- **React** - UIフレームワーク
+- **React** (v18+) - UIフレームワーク
 - **TypeScript** - 型安全性
+- **Vite** - ビルドツール
 - **CSS Modules** - スタイリング
 - **WebSocket** - リアルタイム通信
 
 ### インフラ
-- **Docker Compose** - コンテナ管理
-- **EC2** - バックエンドホスティング
-- **Vercel/Netlify** - フロントエンドホスティング
+- **Docker Compose** - 開発環境（バックエンドのみ）
+- **EC2** - バックエンドホスティング（予定）
+- **Vercel/Netlify** - フロントエンドホスティング（予定）
 
 ## システム構成
 
@@ -83,7 +83,8 @@ subscribe: { symbols: ['NKY', 'BTCUSDT', ...] }
 unsubscribe: { symbols: ['NKY'] }
 
 // サーバー → クライアント
-update: { symbol: 'NKY', data: {...} }
+initial: { data: [...] }  // 初回接続時の全データ
+update: { data: {...} }   // 個別データ更新
 error: { message: 'エラーメッセージ' }
 ```
 

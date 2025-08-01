@@ -16,9 +16,15 @@ cd trade-viewer
 
 2. **環境変数の設定**
 ```bash
-cd docker
-cp -Rp env/.env.local .env
+# バックエンド
+cd backend
+cp .env.example .env
 # .envファイルを編集してAPIキーを設定
+
+# フロントエンド
+cd ../frontend
+cp .env.example .env
+# 必要に応じて設定を変更
 ```
 
 3. **依存関係のインストール**
@@ -38,9 +44,7 @@ cd docker
 docker compose up -d
 ```
 
-環境ファイル（.env）内の`COMPOSE_FILE`設定により、適切な環境用のオーバーライドファイルが自動的に適用されます：
-- 開発環境: `env/local.yml`
-- 本番環境: `env/production.yml`
+これによりRedisサービスが起動します。
 
 5. **フロントエンドの起動**
 ```bash
@@ -66,9 +70,8 @@ docker compose logs -f
 # 再起動
 docker compose restart
 
-# 本番環境で起動
-cp -Rp env/.env.production .env
-docker compose up -d
+# Redis再起動
+docker compose restart redis
 
 # コンテナとボリュームを削除
 docker compose down -v
@@ -113,11 +116,8 @@ npm run lint
 ```
 trade-viewer/
 ├── docker/
-│   ├── docker-compose.yml    # メインのDocker設定
-│   ├── .env.example          # 環境変数サンプル
-│   └── env/
-│       ├── local.yml         # ローカル環境設定
-│       └── production.yml    # 本番環境設定
+│   ├── docker-compose.yml    # Docker Compose設定
+│   └── .env.example          # 環境変数サンプル
 ├── backend/
 │   ├── src/
 │   │   ├── index.ts         # エントリーポイント
@@ -130,10 +130,10 @@ trade-viewer/
 │   └── tsconfig.json
 ├── frontend/
 │   ├── src/
-│   │   ├── main.ts          # エントリーポイント
-│   │   ├── App.vue          # ルートコンポーネント
-│   │   ├── components/      # UIコンポーネント
-│   │   ├── composables/     # Vue Composables
+│   │   ├── main.tsx         # エントリーポイント
+│   │   ├── App.tsx          # ルートコンポーネント
+│   │   ├── components/      # Reactコンポーネント
+│   │   ├── hooks/           # カスタムフック
 │   │   └── services/        # API通信
 │   ├── package.json
 │   └── vite.config.ts
@@ -184,7 +184,7 @@ docker compose up -d
 **Q: 外部APIからデータが取得できない**
 - APIキーが正しく設定されているか確認
 - レート制限に達していないか確認
-- docker/.envファイルの設定を確認
+- backend/.envファイルの設定を確認
 
 ### Redis関連
 **Q: キャッシュが更新されない**

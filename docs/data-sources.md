@@ -47,16 +47,16 @@ GET https://api.coingecko.com/api/v3/simple/price
 - 無料: 30リクエスト/分
 - 月間10,000リクエスト上限
 
-### 3. Exchange Rate API
-**用途**: 為替レート
+### 3. Yahoo Finance API (為替用)
+**用途**: 為替レート（リアルタイム）
 ```javascript
-// エンドポイント
-GET https://api.exchangerate-api.com/v4/latest/USD
+// サポートシンボル
+USDJPY → JPY=X
 ```
 
 **特徴**:
-- 無料枠: 1,500リクエスト/月
-- 更新頻度: 1時間毎
+- リアルタイムデータ
+- 制限なし（合理的な使用範囲内）
 
 ### 4. Alpha Vantage (バックアップ)
 **用途**: 株価・為替の代替
@@ -109,4 +109,4 @@ market:updated    → 最終更新時刻
 ### フォールバック戦略
 - Yahoo Finance → Alpha Vantage
 - CoinGecko → Binance API
-- Exchange Rate API → Fixer.io
+- 為替: Yahoo Finance → Alpha Vantage

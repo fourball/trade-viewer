@@ -26,21 +26,6 @@
 - 無料プラン: 5リクエスト/分、500リクエスト/日
 - 有料プラン: より高いレート制限が必要な場合
 
-### 2. Exchange Rate API キー（オプション）
-
-**用途**: 為替レート（USD/JPY）の取得
-
-#### 取得手順:
-1. [Exchange Rate API](https://app.exchangerate-api.com/sign-up) にアクセス
-2. アカウントを作成:
-   - Email
-   - Password
-3. メールアドレスを確認
-4. ダッシュボードからAPIキーを取得
-
-**料金プラン**:
-- 無料プラン: 1,500リクエスト/月
-- 有料プラン: より多くのリクエストが必要な場合
 
 ## APIキーが不要なサービス
 
@@ -54,7 +39,7 @@
 
 ### 2. Yahoo Finance
 
-**用途**: 株価指数データの取得
+**用途**: 株価指数、為替レート（USD/JPY）の取得
 
 - **APIキー不要**
 - ただし、レート制限があるため本番環境では注意が必要
@@ -64,28 +49,17 @@
 
 取得したAPIキーを環境変数に設定します：
 
-### 1. Docker環境の場合
+### 1. バックエンドの設定
 ```bash
-cd docker
-cp -Rp env/.env.local .env
+cd backend
+cp .env.example .env
 ```
 
 `.env`ファイルを編集:
 ```env
 # Alpha Vantage API
 ALPHA_VANTAGE_API_KEY=ここに取得したAPIキーを入力
-
-# Exchange Rate API (オプション)
-EXCHANGE_RATE_API_KEY=ここに取得したAPIキーを入力
 ```
-
-### 2. ローカル開発の場合
-```bash
-cd backend
-cp .env.example .env
-```
-
-同様に`.env`ファイルを編集してください。
 
 ## APIキーなしでの動作
 

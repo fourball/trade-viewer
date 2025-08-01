@@ -2,35 +2,23 @@
 
 ## 概要
 
-環境ごとに設定を切り替え可能なDocker Compose構成。
-開発環境と本番環境で異なる設定を適用できる。
+Docker Composeを使用したバックエンドサービスの構成。
+Redisとバックエンド用のDockerfileが含まれている。
+フロントエンドはホスト側で実行する。
 
 ## ディレクトリ構成
 
 ```
 docker/
-├── docker-compose.yml    # ベース設定
-├── .env.example         # 環境変数テンプレート
-└── env/
-    ├── local.yml        # ローカル環境用オーバーライド
-    └── production.yml   # 本番環境用オーバーライド
+├── docker-compose.yml    # Docker Compose設定
+└── .env.example         # 環境変数テンプレート
 ```
 
-## 環境切り替えの仕組み
-
-Makefileを使用して環境を切り替え：
+## 起動方法
 
 ```bash
-# ローカル環境（デフォルト）
-make up
-
-# 本番環境
-make up ENV=production
-```
-
-内部的には以下のコマンドが実行される：
-```bash
-docker compose -f docker/docker-compose.yml -f docker/env/local.yml up -d
+cd docker
+docker compose up -d
 ```
 
 ## サービス構成
@@ -72,21 +60,12 @@ redis:
     - redis-data:/data          # データ永続化
 ```
 
-## 環境別設定
+## 開発時の設定
 
-### local.yml（開発環境）
-
+- `Dockerfile.dev` を使用（開発用）
 - ホットリロード有効
-- デバッグログ出力
-- ポート公開（Redis: 6379）
+- ポート公開（API: 3001）
 - `npm run dev` で起動
-
-### production.yml（本番環境）
-
-- 自動再起動設定（restart: unless-stopped）
-- 本番ログレベル（info）
-- `npm run start` で起動
-- 最適化されたビルド
 
 ## 環境変数
 
@@ -99,7 +78,6 @@ NODE_ENV=development
 
 # 外部API設定
 ALPHA_VANTAGE_API_KEY=your_api_key_here
-EXCHANGE_RATE_API_KEY=your_api_key_here
 
 # Redis設定
 REDIS_URL=redis://redis:6379
@@ -116,27 +94,23 @@ REDIS_URL=redis://redis:6379
 - サービス間は`redis`、`api`のホスト名で通信可能
 - 外部からはポートマッピングでアクセス
 
-## ビルド＆デプロイ
+## Docker操作
 
-### 開発環境
+### 基本操作
 ```bash
-# イメージビルド
-make build
+cd docker
 
 # 起動
-make up
+docker compose up -d
+
+# 停止
+docker compose down
 
 # ログ確認
-make logs
-```
+docker compose logs -f
 
-### 本番環境
-```bash
-# 本番用ビルド
-make build ENV=production
-
-# 本番環境起動
-make up ENV=production
+# 再起動
+docker compose restart
 ```
 
 ## トラブルシューティング
@@ -154,5 +128,5 @@ API_PORT=3002
 ### ボリュームクリーンアップ
 ```bash
 # 全削除（データも消える）
-make clean
+docker compose down -v
 ```
