@@ -7,6 +7,7 @@ import { marketRoutes } from './routes/market';
 import { healthRoutes } from './routes/health';
 import { websocketRoutes } from './routes/websocket';
 import { startCronJobs } from './workers/marketDataFetcher';
+import { cloudfrontAuth } from './middleware/cloudfront-auth';
 
 export async function buildServer(): Promise<FastifyInstance> {
   const server = Fastify({
@@ -27,6 +28,9 @@ export async function buildServer(): Promise<FastifyInstance> {
     }
   });
   await server.register(redisPlugin);
+
+  // Add CloudFront authentication middleware
+  server.addHook('onRequest', cloudfrontAuth);
 
   // Register routes
   await server.register(marketRoutes, { prefix: '/api/v1' });
