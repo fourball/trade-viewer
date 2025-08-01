@@ -9,7 +9,6 @@ services:
       - NODE_ENV=${NODE_ENV:-development}
       - REDIS_URL=redis://redis:6379
       - ALPHA_VANTAGE_API_KEY=${ALPHA_VANTAGE_API_KEY}
-      - EXCHANGE_RATE_API_KEY=${EXCHANGE_RATE_API_KEY}
       - TZ=Asia/Tokyo
     depends_on:
       - redis

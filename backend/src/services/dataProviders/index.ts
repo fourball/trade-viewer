@@ -17,7 +17,6 @@ export function createDataProviders(): DataProvider[] {
   providers.push(
     new YahooFinanceProvider(),
     new CoinGeckoProvider()
-    // ExchangeRateProviderは削除（Yahoo Financeで代替）
   );
 
   // Add Alpha Vantage if API key is provided
