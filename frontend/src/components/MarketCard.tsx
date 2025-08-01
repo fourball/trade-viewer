@@ -42,7 +42,7 @@ export const MarketCard: React.FC<MarketCardProps> = ({ data }) => {
     return `${formatNumber(num, 0)} ${currency}`;
   };
   
-  const formatPrice = (num: number, currency: string, symbol: string): string => {
+  const formatPrice = (num: number, _currency: string, symbol: string): string => {
     // USDJPYは小数点第2位まで
     if (symbol === 'USDJPY' || symbol === 'EURJPY' || symbol === 'GBPJPY') {
       return formatNumber(num, 2);
@@ -59,13 +59,7 @@ export const MarketCard: React.FC<MarketCardProps> = ({ data }) => {
     }).format(date);
   };
 
-  // 30分以内かどうかを判定
-  const isRecent = (timestamp: string): boolean => {
-    const now = new Date();
-    const updateTime = new Date(timestamp);
-    const diffMinutes = (now.getTime() - updateTime.getTime()) / (1000 * 60);
-    return diffMinutes <= 30;
-  };
+  // isRecent関数を削除（isRecentUpdateで代替）
 
   // カテゴリに応じたクラス名を決定
   const categoryClass = data.category ? styles[`category${data.category.charAt(0).toUpperCase() + data.category.slice(1)}`] : '';
@@ -77,7 +71,7 @@ export const MarketCard: React.FC<MarketCardProps> = ({ data }) => {
           <h3 className={`${styles.symbol} ${!isRecentUpdate ? styles.oldData : ''}`}>{data.symbol}</h3>
           <p className={styles.name}>{data.name}</p>
         </div>
-        <span className={`${styles.updateTime} ${isRecent(data.timestamp) ? styles.recentUpdate : ''}`}>{formatTime(data.timestamp)}</span>
+        <span className={`${styles.updateTime} ${isRecentUpdate ? styles.recentUpdate : ''}`}>{formatTime(data.timestamp)}</span>
       </div>
       
       <div className={styles.priceSection}>

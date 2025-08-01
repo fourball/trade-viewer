@@ -3,6 +3,8 @@ services:
     user: "999:999"
     environment:
       - NODE_ENV=production
+      - CLOUDFRONT_SECRET=${CLOUDFRONT_SECRET}
+      - CORS_ORIGIN=${CORS_ORIGIN:-http://localhost:5173}
       - LOG_LEVEL=info
     restart: unless-stopped
     command: npm run start

@@ -1,4 +1,3 @@
-import React from 'react';
 import { MarketDashboard } from './components/MarketDashboard';
 import './App.css';
 

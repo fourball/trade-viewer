@@ -4,9 +4,8 @@ services:
       context: ../backend
       dockerfile: Dockerfile
     ports:
-      - "${API_PORT:-3001}:3001"
+      - "3001:3001"
     environment:
-      - NODE_ENV=${NODE_ENV:-development}
       - REDIS_URL=redis://redis:6379
       - ALPHA_VANTAGE_API_KEY=${ALPHA_VANTAGE_API_KEY}
       - TZ=Asia/Tokyo
