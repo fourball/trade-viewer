@@ -1,0 +1,27 @@
+{
+  "name": "trade-viewer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "claude",
+    "start:gemini": "gemini",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fourball/trade-viewer.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/fourball/trade-viewer/issues"
+  },
+  "homepage": "https://github.com/fourball/trade-viewer#readme",
+  "devDependencies": {
+    "@anthropic-ai/claude-code": "^1.0.65",
+    "@google/gemini-cli": "^0.1.9"
+  }
+}

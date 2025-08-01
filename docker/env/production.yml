@@ -1,0 +1,10 @@
+services:
+  api:
+    environment:
+      - NODE_ENV=production
+      - LOG_LEVEL=info
+    restart: unless-stopped
+    command: npm run start
+
+  redis:
+    restart: unless-stopped

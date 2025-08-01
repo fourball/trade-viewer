@@ -1,0 +1,140 @@
+.container {
+  min-height: 100vh;
+  background-color: #0a0a0a;
+}
+
+.headerWrapper {
+  background-color: #141414;
+  border-bottom: 1px solid #2a2a2a;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header {
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #e5e5e5;
+  margin: 0;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.connectionStatus {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.statusDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #666;
+}
+
+.connected {
+  background-color: #22c55e;
+}
+
+.disconnected {
+  background-color: #ef4444;
+}
+
+.statusText {
+  font-size: 13px;
+  color: #999;
+}
+
+.updateTime {
+  font-size: 13px;
+  color: #999;
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  gap: 16px;
+  color: #999;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #333;
+  border-top-color: #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.error {
+  max-width: 1600px;
+  margin: 20px auto;
+  padding: 0 20px;
+}
+
+.error p {
+  background-color: #2a1111;
+  color: #ef4444;
+  padding: 12px 16px;
+  border-radius: 6px;
+  border: 1px solid #441111;
+  margin: 0;
+}
+
+.main {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .status {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 8px;
+  }
+
+  .main {
+    padding: 12px;
+  }
+}
