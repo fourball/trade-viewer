@@ -11,7 +11,7 @@ import { cloudfrontAuth } from './middleware/cloudfront-auth';
 
 export async function buildServer(): Promise<FastifyInstance> {
   const server = Fastify({
-    logger: logger,
+    logger: logger as unknown as FastifyInstance['log'],
   });
 
   // Register plugins
@@ -22,7 +22,7 @@ export async function buildServer(): Promise<FastifyInstance> {
   await server.register(websocket, {
     options: {
       maxPayload: 1048576, // 1MB
-      verifyClient: function (info, next) {
+      verifyClient: function (_info, next) {
         next(true); // Accept all connections
       }
     }
